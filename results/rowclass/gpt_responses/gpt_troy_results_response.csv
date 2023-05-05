@@ -1,0 +1,107 @@
+filename,response
+C10036_C10036.csv,"
+Header: Year/Month, 2010/02 Per cent (%), 2010/01 Per cent (%), 2009/02 Per cent (%)
+Data: Employees total, -permanent full-time job, -permanent part-time job, -fixed-term full-time job, -fixed-term part-time job, Fixed-term job total, Part-time job total
+Group Header: Employment relationship
+Metadata: Source: Labour force survey 2010, February. Statistics Finland
+"
+C10143_C10143.csv,"
+Header: ""For-hire trucking, operating statistics""
+Data: Operating revenues,""25,162.0"",""27,028.6"",""28,771.3"",""28,094.1"",""29,675.1""
+Operating expenses,""23,345.6"",""24,918.5"",""26,905.7"",""26,544.8"",""27,965.6""
+Group Header: None
+Metadata: ""Source: "
+C10075_C10075.csv,"
+Header: ""1. Labour costs, Labour Cost Index 2008=100""
+Data: Industry code, Standard Industrial Classification, Whole year 2007, 2008/1, 2008/2, 2008/3, 2008/4, Whole year 2008, 2009/1, 2009/2, 2009/3, 2009/4, Whole year 2009
+Group Header: B-S, B-E, C, ""10,11"", ""16,17"", 19–22, 24–30"
+C10192_C10192.csv,"
+Header: ""Census families in private households by family structure and presence of children, by census metropolitan area (2006 Census)"", ""(St. John's, Halifax, Moncton, Saint John)"", ""2006"", ""St. John's (N.L.) (number)"", ""Halifax (N.S.) (number)"", ""Moncton (N.B.) (number)"", ""Saint John (N.B.) (number)""
+Data: ""52,525"", """
+C10191_C10191.csv,"
+Header: New Housing Price Index
+Group Header: Canada, House only, Land only
+Data: St. John's (N.L.), Charlottetown (P.E.I), Halifax (N.S.), ""Saint John, Moncton, and Fredericton (N.B.)"", Québec (Que.), Montréal (Que.), Ottawa–Gatineau (Ont./Que.), Toronto and Oshawa (Ont.), Hamilton (Ont.), St."
+C10096_C10096.csv,"
+Header: ""Hard Coal Stocks, month-end, million tonnes""
+Data: Month,Year,,,
+      ,2006,2007,2008,2009
+      January,""5,0"",""4,4"",""3,6"",""4,2""
+      February,""4,6"",""4,1"",""3,6"",""4,1""
+      March,""4,1"",""4,2"",""3,7"",""4,0""
+      April,""3,"
+C10013_C10013.csv,"
+Header: Rank, State, Total, Exports, Imports
+Group Header: ""TABLE 3. Top 3 States for Trade via Port Huron, MI: 2008""
+Metadata: Excel | CSV
+Note: ""SOURCE: U.S. Department of Transportation, Bureau of Transportation Statistics, Transborder Surface Freight Data, 2008.""
+Data: 1, Michigan, ""24,266"", ""3,992"", ""20,274""
+2, Illinois, ""8"
+C10048_C10048.csv,"
+Header: ""Rail transportation, length of track operated for freight and passenger transportation, by province and territory ""
+Data: Newfoundland and Labrador,528,312,612,473,312; Nova Scotia,""1,157"",""1,166"",""1,151"",""1,103"",""1,000""; New Brunswick,""1,794"",""1,793"",""1,804"",""1,803"",""2,260""; Quebec,""9,423"",""9,528"",""9,438"","""
+C10050_C10050.csv,"
+Header: Self-employment, historical summary
+Group Header: None
+Data: 1981,""1,425.20"",""1,020.60"",404.6, 1982,""1,483.20"",""1,056.70"",426.5, 1983,""1,543.20"",""1,094.50"",448.7, 1984,""1,569.70"",""1,096.40"",473.3, 1985,""1,662."
+C10006_C10006.csv,"
+Header: 3.7 Part-time employed persons by sex 2010/02 - 2009/02, Year/Month, Sex
+Group Header: Both sexes, Males, Females
+Data: 373, 357, 368, 132, 127, 118, 241, 230, 250
+Metadata: ""Source: Labour force survey 2010, February. Statistics Finland""
+Note: ""Inquiries: Heidi Melasniemi-Uutela (09) 1734 2523, Kalle"
+C10142_C10142.csv,"
+Header: 0
+Group Header: None
+Metadata: None
+Note: None
+Derived: None"
+C10137_C10137.csv,"
+Header: Population in private households, showing living arrangements, by province and territory (2006 Census), 2006, Canada number, N.L. number, P.E.I. number, N.S. number
+Data: Total population in private households, Persons in family households, Persons in non-family households
+Group Header: Spouses, common-law partners or lone parents, Children in census families, Non-family persons living with relatives1, Non-family persons living with non"
+C10148_C10148.csv,"
+Header: ""Retail non-store industries, commodity sales, by industries""
+Group Header: ""Food and beverages"", ""Health and personal care"", ""Clothing, footwear and accessories"", ""Home furnishings and electronics"", ""Automotive fuels, oils and additives"", ""Housewares (non-electric) and household supplies (excluding personal care products)"", ""Hardware and lawn and garden"", ""Sporting and leisure goods"", ""Household fuels""
+Data: Total commodities, Food"
+C10184_C10184.csv,"
+Header: 0
+Group Header: None
+Metadata: None
+Note: 8
+Derived: None"
+C10085_C10085.csv,"
+Header: Business and government use of information and communications technologies
+Group Header: (Enterprises that use electronic mail)
+Data: Private sector,73.89,76.6,76.24,77.5,81.14
+""Agriculture, forestry, fishing and hunting1"",57.67,70.59,72.47,56.97,62.78
+Mining and oil and gas extraction,88.93,87.34,88."
+C10081_C10081.csv,"
+Header: 0
+Group Header: None
+Metadata: None
+Note: 8
+Derived: None"
+C10129_C10129.csv,"
+Header: ""Homicide offences, number and rate, by province and territory ""
+Data: Canada,624,663,606,594,611
+Group Header: (Number of homicides)
+Metadata: ""Source: Statistics Canada, CANSIM, table (for fee) 253-0001 and Homicide Survey, Canadian Centre for Justice Statistics.""
+Note: ""Notes: Homicide includes Criminal Code offences of murder, manslaughter"
+C10005_C10005.csv,"
+Header: ""TABLE 4. Port Calls By Vessel Type, Port of New York/New Jersey: 2007"", Excel | CSV, Container, Tanker, Dry bulk, General, Other, Total
+Data: Calls,""2,549"",""1,443"",274,105,597,""4,968"", ""Capacity (deadweight tons, thousands)"",""127,359"",""77,897"",""10,788"",""1,577"",""14,805"",""232"
+C10122_C10122.csv,"
+Header: 1, 
+Group Header: None 
+Data: 2, 3 
+Metadata: 4 
+Note: 5 
+Derived: None"
+C10149_C10149.csv,"
+Header: ""Waste from Central government1, by activity and material. 2008""
+Group Header: Material
+Data: Total,89 292,13 393,16 811,13 934,45 154
+Metadata: 1 ,""Except supporting and auxiliary transport activities, activities of travel agencies, research and ""
+Note: 2 ,Discarded vehicles from defense is not included in the figures.
+Derived: None"
