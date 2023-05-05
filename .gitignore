@@ -1,6 +1,7 @@
 data/estimate/csv
 data/estimate/json
 weights/*.pth
+weights/rowclass/*.pth
 
 # JupyterNotebooks template
 .ipynb_checkpoints
