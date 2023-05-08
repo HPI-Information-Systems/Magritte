@@ -1,0 +1,10 @@
+name: magritte
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.11
+  - readline
+  - ca-certificates
+  - openssl
+prefix: /home/gerardo/miniconda3/envs/magritte
