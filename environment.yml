@@ -2,9 +2,22 @@ name: magritte
 channels:
   - conda-forge
   - defaults
+  - pytorch
 dependencies:
   - python=3.11
   - readline
   - ca-certificates
   - openssl
-prefix: /home/gerardo/miniconda3/envs/magritte
+  - pandas
+  - numpy
+  - xlrd
+  - chardet
+  - matplotlib
+  - scikit-learn
+  - seaborn
+  pip:
+    - torch
+    - torchtext
+    - torchvision
+    - lightning
+
