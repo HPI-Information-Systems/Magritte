@@ -191,17 +191,18 @@ class DecoderBottleneck(nn.Module):
 
 
 class ResNetEncoder(nn.Module):
-    def __init__(self, block, layers, first_conv=False, maxpool1=False):
+    def __init__(self, input_depth, block, layers, first_conv=False, maxpool1=False):
         super().__init__()
 
         self.inplanes = 64
         self.first_conv = first_conv
         self.maxpool1 = maxpool1
+        self.input_depth = input_depth
 
-        if self.first_conv:
-            self.conv1 = nn.Conv2d(768, self.inplanes, kernel_size=7, stride=2, padding=3, bias=False)
+        if self.first_conv: #TODO pull this out into variable
+            self.conv1 = nn.Conv2d(input_depth, self.inplanes, kernel_size=7, stride=2, padding=3, bias=False)
         else:
-            self.conv1 = nn.Conv2d(768, self.inplanes, kernel_size=3, stride=1, padding=1, bias=False)
+            self.conv1 = nn.Conv2d(input_depth, self.inplanes, kernel_size=3, stride=1, padding=1, bias=False)
 
         self.bn1 = nn.BatchNorm2d(self.inplanes)
         self.relu = nn.ReLU(inplace=True)
@@ -254,7 +255,7 @@ class ResNetEncoder(nn.Module):
 class ResNetDecoder(nn.Module):
     """Resnet in reverse order."""
 
-    def __init__(self, block, layers, latent_dim, input_height, first_conv=False, maxpool1=False):
+    def __init__(self, input_depth, block, layers, latent_dim, input_height, first_conv=False, maxpool1=False):
         super().__init__()
 
         self.expansion = block.expansion
@@ -262,6 +263,7 @@ class ResNetDecoder(nn.Module):
         self.first_conv = first_conv
         self.maxpool1 = maxpool1
         self.input_height = input_height
+        self.input_depth = input_depth
 
         self.upscale_factor = 8
 
@@ -286,7 +288,7 @@ class ResNetDecoder(nn.Module):
         # interpolate after linear layer using scale factor
         self.upscale1 = Interpolate(size=input_height // self.upscale_factor)
 
-        self.conv1 = nn.Conv2d(64 * block.expansion, 768, kernel_size=3, stride=1, padding=1, bias=False)
+        self.conv1 = nn.Conv2d(64 * block.expansion, input_depth, kernel_size=3, stride=1, padding=1, bias=False)
 
     def _make_layer(self, block, planes, blocks, scale=1):
         upsample = None
@@ -324,20 +326,18 @@ class ResNetDecoder(nn.Module):
 
 
 
-def resnet18_encoder(first_conv, maxpool1):
-    return ResNetEncoder(EncoderBlock, [2, 2, 2, 2], first_conv, maxpool1)
+def resnet18_encoder(input_depth, first_conv, maxpool1):
+    return ResNetEncoder(input_depth, EncoderBlock, [2, 2, 2, 2], first_conv, maxpool1)
+
+def resnet18_decoder(input_depth, latent_dim, input_height, first_conv, maxpool1):
+    return ResNetDecoder(input_depth, DecoderBlock, [2, 2, 2, 2], latent_dim, input_height, first_conv, maxpool1)
 
 
 
-def resnet18_decoder(latent_dim, input_height, first_conv, maxpool1):
-    return ResNetDecoder(DecoderBlock, [2, 2, 2, 2], latent_dim, input_height, first_conv, maxpool1)
+def resnet50_encoder(input_depth, first_conv, maxpool1):
+    return ResNetEncoder(input_depth, EncoderBottleneck, [3, 4, 6, 3], first_conv, maxpool1)
 
 
 
-def resnet50_encoder(first_conv, maxpool1):
-    return ResNetEncoder(EncoderBottleneck, [3, 4, 6, 3], first_conv, maxpool1)
-
-
-
-def resnet50_decoder(latent_dim, input_height, first_conv, maxpool1):
-    return ResNetDecoder(DecoderBottleneck, [3, 4, 6, 3], latent_dim, input_height, first_conv, maxpool1)
+def resnet50_decoder(input_depth, latent_dim, input_height, first_conv, maxpool1):
+    return ResNetDecoder(input_depth, DecoderBottleneck, [3, 4, 6, 3], latent_dim, input_height, first_conv, maxpool1)

@@ -1,0 +1,36 @@
+,"Carson Beach, South Boston: Bacterial Water Quality 2015",,,,,
+,,,,,,
+,Bacteria monitoring is conducted by the Massachusetts Dept. of Conservation and Recreation (DCR) during the swimming season.,,,,,
+,"Bacteria samples are collected at several locations along the beach, and  the test results are available 24 hours later.",,,,,
+,High bacteria triggers a swimming advisory and repeated sampling until bacteria meet limits.,,,,,
+,,,,,,
+,"Displayed are Enterococcus bacteria counts, with high counts in red.  The maximum daily limit is 104 counts/100 mL.",,,,,
+,,,,,,
+,,,,,,
+,A swimming advisory is declared by the DCR for the following day if: ,,,,,
+,      ▪  counts exceed 104 counts/100 mL limit at EITHER the McCormack Bathhouse or I St locations;,,,,,
+,      ▪  OR if the 5-day running geometric mean exceeds 35 counts/100 mL (geometric mean of the previous 5 days' samples).,,,,,
+,"Daily rainfall totals from Logan Airport, National Weather Service raingauge",,,,,
+,All results are in counts/100 mL and testing is performed by DCR.,,,,,
+,,,,,,
+,"Weekly sampling by DCR began May 21, 2015 and ended on September 3, 2015.",,,,,
+,,,,,,
+,, Daily Rain (in.),,McCormack Bathhouse,, I Street
+,,,,,,
+,2015-05-21 00:00:00,0,,<2,,<2
+,2015-05-28 00:00:00,Trace,,<2,,<2
+,2015-06-04 00:00:00,0,,6,,2
+,2015-06-11 00:00:00,0,,2,,111
+,2015-06-12 00:00:00,0,,<2,,13
+,2015-06-18 00:00:00,0,,<2,,<2
+,2015-06-25 00:00:00,0,,<2,,10
+,2015-07-02 00:00:00,0,,<2,,2
+,2015-07-09 00:00:00,0.15,,2,,<2
+,2015-07-16 00:00:00,0,,2,,2
+,2015-07-23 00:00:00,0,,4,,<2
+,2015-07-30 00:00:00,0.02,,2,,4
+,2015-08-06 00:00:00,0,,20,,2
+,2015-08-13 00:00:00,0,,4,,3
+,2015-08-20 00:00:00,0,,11,,6
+,2015-08-27 00:00:00,0,,2,,<2
+,2015-09-03 00:00:00,0.01,,2,,8

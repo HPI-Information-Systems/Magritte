@@ -1,6 +1,7 @@
 data/estimate/csv
 data/estimate/json
 weights/*.pth
+weights/weights.tar.gz
 weights/rowclass/*.pth
 data/gittables/*.tar.gz
 

@@ -1,0 +1,9 @@
+{
+  "model": {
+    "d_model":768,
+    "n_classes": 116,
+    "optimizer_lr":5e-5,
+    "save_path":"weights/reca_magritte_columntype.pth",
+    "label_path":"vocabulary/gittables/column_labels.txt"
+  }
+}

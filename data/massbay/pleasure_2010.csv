@@ -1,0 +1,34 @@
+,"Pleasure Bay Beach, South Boston",,,
+,Bacteria Counts,,,
+,,,,
+,Spreadsheets are updated weekly if not sooner.,,,
+,Displayed are Enterococcus counts.  The maximum daily limit is 104 counts/100 mL.,,,
+,,,,
+,A swimming advisory is declared by the DCR for the following day if: ,,,
+,      ▪  counts exceed 104 counts/100 mL limit at East Broadway location;,,,
+,      ▪  OR if rainfall exceeds 2 inches (an extremely large rainfall event);,,,
+,      ▪  OR if the 5-day running geometric mean exceeds 35 counts/100 mL (geometric mean of the previous 5 days' samples).,,,
+,"Daily rainfall totals from Logan Airport, National Weather Service raingauge",,,
+,All results are in counts/100 mL and testing is performed by DCR.,,,
+,,,,
+,A swimming advisory is posted due to either high Enterococcus counts or heavy rainfall.,,,
+,"Weekly sampling by DCR began May 27, 2010 and ended September 2, 2010.",,,
+,"Pleasure Bay is sampled once per week, with resampling the following day if bacteria counts are elevated.",,,
+,,,,
+,, Daily Rainfall (in.),,Pleasure Bay at Broadway
+,,,,
+,2010-05-27 00:00:00,0.05,,6
+,2010-06-03 00:00:00,0.7,,4
+,2010-06-10 00:00:00,0.1,,4
+,2010-06-17 00:00:00,Trace,,13
+,2010-06-24 00:00:00,0.05,,<2
+,2010-07-01 00:00:00,0,,12
+,2010-07-08 00:00:00,0,,12
+,2010-07-15 00:00:00,Trace,,<2
+,2010-07-22 00:00:00,0,,2
+,2010-07-29 00:00:00,0.04,,<2
+,2010-08-05 00:00:00,0.99,,<2
+,2010-08-12 00:00:00,0,,2
+,2010-08-19 00:00:00,Trace,,<2
+,2010-08-26 00:00:00,0,,14
+,2010-09-02 00:00:00,0,,12

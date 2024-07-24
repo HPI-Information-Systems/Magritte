@@ -1,0 +1,22 @@
+{
+ "vocabulary": {
+      "directory":"vocabulary/gittables"
+  },
+  "model": {
+  "vocab_path": "vocabulary/gittables/tokens.txt",
+  "label_path": "vocabulary/gittables/dialect_labels.txt",
+  "d_model":768,
+  "max_len": 128,
+  "max_rows": 128,
+  "n_layers":6,
+  "n_heads":6,
+  "n_classes":4,
+  "d_k":768, 
+  "d_v":64, 
+  "d_ff":3072,
+  "n_segments":2,
+  "encoding_dim":128,
+  "weights": [0,1,0.1,1],
+  "save_path" : "weights/magritte_dialect.pth"
+}
+}

@@ -2,8 +2,7 @@
      - Special Characters
      - Patterns of characters
 """
-import pdb
-
+import torch
 import regex
 from typing import List
 
@@ -66,13 +65,26 @@ def alphanumeric_replacement(match, shrink = False):
         return ""
 
 class PatternTokenizer():
-    def __init__(self, unk_token="[UNK]", sep_token="[SEP]", pad_token="[PAD]", cls_token="[CLS]", mask_token="[MASK]", **kwargs):
-
-        self.unk_token=unk_token
-        self.sep_token=sep_token
-        self.pad_token=pad_token
-        self.cls_token=cls_token
-        self.mask_token=mask_token
+    def __init__(
+        self,
+        max_rows=128,
+        max_len=128,
+        unk_token="[UNK]",
+        sep_token="[SEP]",
+        pad_token="[PAD]",
+        cls_token="[CLS]",
+        mask_token="[MASK]",
+        token_vocab=None,
+        **kwargs,
+    ):
+        self.unk_token = unk_token
+        self.sep_token = sep_token
+        self.pad_token = pad_token
+        self.cls_token = cls_token
+        self.mask_token = mask_token
+        self.max_rows = max_rows
+        self.max_len = max_len
+        self.token_vocab = token_vocab
 
 
     def __call__(self, text: str, return_text = False, verbose=False)->list[str]:
@@ -119,3 +131,48 @@ class PatternTokenizer():
 
         if verbose: print("")
         return tokens
+    
+    def tokenize_file(self, csv_path):
+
+        rawdata = open(csv_path, "rb").read()
+
+        try:
+            rows = rawdata.decode("utf-8").splitlines()[:self.max_rows]
+        except UnicodeDecodeError:
+            rows = rawdata.decode("latin-1").splitlines()[:self.max_rows]
+        if len(rows) < self.max_rows:
+            rows += [""] * (self.max_rows - len(rows))
+
+        row_tokens = []
+        for r in rows[: self.max_rows]:
+            if len(r):
+                tokens = [self.cls_token] + self.__call__(r)
+            else:
+                tokens = [self.cls_token] + [self.sep_token]
+            if len(tokens) < self.max_len:  # Zero Paddings
+                n_pad = self.max_len - len(tokens)
+                tokens.extend([self.pad_token] * n_pad)
+            row_tokens.append(tokens[:self.max_len])
+
+        out = torch.tensor([self.token_vocab(t) for t in row_tokens])
+        return out.type(torch.int16)
+
+    def tokenize_stream(self, content):
+        
+        rows = content.splitlines()[:self.max_rows]
+        if len(rows) < self.max_rows:
+            rows += [""] * (self.max_rows - len(rows))
+
+        row_tokens = []
+        for r in rows[: self.max_rows]:
+            if len(r):
+                tokens = [self.cls_token] + self.__call__(r)
+            else:
+                tokens = [self.cls_token] + [self.sep_token]
+            if len(tokens) < self.max_len:  # Zero Paddings
+                n_pad = self.max_len - len(tokens)
+                tokens.extend([self.pad_token] * n_pad)
+            row_tokens.append(tokens[:self.max_len])
+
+        out = torch.tensor([self.token_vocab(t) for t in row_tokens])
+        return out.type(torch.int16)
