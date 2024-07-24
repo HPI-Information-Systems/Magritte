@@ -10,6 +10,7 @@ import torchmetrics
 from torchmetrics.classification import F1Score
 
 from torchtext.vocab import Vocab
+from torchtext.vocab import vocab as build_vocab
 from torch import optim
 
 from csv_embedder.utils import confusion_matrix_figure, f1_table
@@ -20,23 +21,37 @@ torch.set_float32_matmul_precision('medium')
 
 class MagritteFinetuneDialectDetection(MagritteBase):
 
-    def __init__(self,
-                 label_vocab: Vocab,
-                 n_classes: int,
-                 weights: List[int],
-                 optimizer_lr=1e-4,
-                 *args, **kwargs
-                 ):
+    def __init__(
+        self,
+        n_classes: int,
+        weights: List[int],
+        optimizer_lr=1e-4,
+        label_vocab: Vocab = None,
+        label_path=None,
+        device="cuda",
+        *args,
+        **kwargs,
+    ):
         super(MagritteFinetuneDialectDetection, self).__init__(*args, **kwargs)
         self.model_device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         self.n_classes = n_classes
-        self.label_vocab = label_vocab
+        self.label_path = label_path
+        if label_vocab is None:
+            assert label_path is not None
+            dialect_classes = open(label_path).read().splitlines()
+            ordered_classes = {c: len(dialect_classes) - i for i, c in enumerate(dialect_classes)}
+            self.label_vocab = build_vocab(ordered_classes)
+        else:
+            self.label_vocab = label_vocab
+
+
+
         self.tagger = nn.Linear(self.d_model * 2 + self.encoding_dim, self.n_classes)
         self.unk_idx = self.token_vocab["[UNK]"]
 
         pad_lbl = self.label_vocab(["[PAD]"])[0]
         weight = torch.tensor(weights, dtype=torch.float)
-        print("Dialect vocabulary indices:", [(idx,s) for idx,s in enumerate(self.label_vocab.get_itos())])
+        # print("Dialect vocabulary indices:", [(idx,s) for idx,s in enumerate(self.label_vocab.get_itos())])
         self.finetune_loss = nn.CrossEntropyLoss(ignore_index=pad_lbl, weight=weight)
         self.delimiter_loss = nn.CrossEntropyLoss()
         self.quotechar_loss = nn.CrossEntropyLoss()
@@ -56,6 +71,11 @@ class MagritteFinetuneDialectDetection(MagritteBase):
         self.accumulators = {key: torchmetrics.CatMetric() for key in acc_keys}
         self.optimizer_lr = optimizer_lr
 
+        if not torch.cuda.is_available():
+            self.to('cpu')
+        else:
+            self.to(device)
+
 
     def extract_logits(self, input_tokens, tag_softmax, class_idx, padding_mask, vocab_size, batch_size):
         mask = (tag_softmax.argmax(dim=3).eq(class_idx))
@@ -69,7 +89,6 @@ class MagritteFinetuneDialectDetection(MagritteBase):
         logits = torch.softmax(logits.float(), dim=1)
         return logits
 
-
     def forward(self, input_tokens, *args, **kwargs) -> Dict[str, torch.Tensor]:
         """
 
@@ -77,24 +96,39 @@ class MagritteFinetuneDialectDetection(MagritteBase):
         :param token_type_ids: the type of the token, used for encoding the same file objective function
         :return: dict containing the row embeddings, the self attention, the file embeddings
         """
-        y = super(MagritteFinetuneDialectDetection, self).forward(input_tokens, *args, **kwargs)
+        output = {}
+        y = super(MagritteFinetuneDialectDetection, self).forward(
+            input_tokens, *args, **kwargs
+        )
         row_embeddings = y["row_embeddings"]
-        file_embedding = y["file_embedding"]
         batch_size = row_embeddings.shape[0]
 
-        # replicate file embedding to match the number of rows
-        row_vecs = row_embeddings.permute(0, 2, 3, 1)
-        row_cls = row_vecs[:, :, 0, :].unsqueeze(2).expand(batch_size, self.max_rows, self.max_len, -1)  # shape [batch_size, n_rows, d_model]
-        file_vec = file_embedding.unsqueeze(1).unsqueeze(1).expand(batch_size, self.max_rows, self.max_len, -1)
+        row_vecs = row_embeddings
+        row_cls = (
+            row_vecs[:, :, 0, :]
+            .unsqueeze(2)
+            .expand(batch_size, self.max_rows, self.max_len, -1)
+        )  # shape [batch_size, n_rows, d_model]
 
-        # concatenate the file_vec and row_cls embedding with the row vecs along last dimension
-        dialect_embeddings = torch.cat((row_vecs, row_cls, file_vec), dim=3)
+        if self.nocnn:
+            dialect_embeddings = torch.cat((row_vecs, row_cls), dim=3)
+        else:
+            file_embedding = y["file_embedding"]
+            file_vec = (
+                file_embedding.unsqueeze(1)
+                .unsqueeze(1)
+                .expand(batch_size, self.max_rows, self.max_len, -1)
+            )
+            # concatenate the file_vec and row_cls embedding with the row vecs along last dimension
+            dialect_embeddings = torch.cat((row_vecs, row_cls, file_vec), dim=3)
+            output["file_embedding"] = file_embedding
+
         tags_logits = self.tagger(dialect_embeddings)
         tag_softmax = nn.Softmax(dim=3)(tags_logits)
 
         del_class, quote_class, escape_class = self.label_vocab(["D", "Q", "E"])
         padding_mask = input_tokens.data.eq(self.padding_index)
-        padding_mask = padding_mask +input_tokens.data.eq(self.cls_index)
+        padding_mask = padding_mask + input_tokens.data.eq(self.cls_index)
         padding_mask = padding_mask + input_tokens.data.eq(self.sep_index)
 
         vocab_size = len(self.token_vocab)
@@ -103,12 +137,13 @@ class MagritteFinetuneDialectDetection(MagritteBase):
 
         quotechar_logits = self.extract_logits(input_tokens, tag_softmax, quote_class, padding_mask, vocab_size, batch_size)
         predicted_quotechar = torch.argmax(quotechar_logits, dim=1)
-        
+
         escapechar_logits = self.extract_logits(input_tokens, tag_softmax, escape_class, padding_mask, vocab_size, batch_size)
         predicted_escapechar = torch.argmax(escapechar_logits, dim=1)
 
-        return {"row_embeddings": row_embeddings,
-                "file_embedding": file_embedding,
+        output.update(
+            {
+                "row_embeddings": row_embeddings,
                 "tags_logits": tags_logits,
                 "predicted_tags": tag_softmax,
                 "predicted_delimiter": predicted_delimiter,
@@ -117,7 +152,10 @@ class MagritteFinetuneDialectDetection(MagritteBase):
                 "delimiter_logits": delimiter_logits,
                 "quotechar_logits": quotechar_logits,
                 "escapechar_logits": escapechar_logits,
-                }
+            }
+        )
+        return output
+
 
     def training_step(self, batch, batch_idx):
         x, target = batch
@@ -148,7 +186,6 @@ class MagritteFinetuneDialectDetection(MagritteBase):
             f1 = self.train_f1["f1_" + k](output["predicted_" + k], target["target_" + k])
             self.log("f1_"+k, f1, on_step=True, on_epoch=True, prog_bar=True, logger=True)
 
-
         return loss
 
     def on_train_epoch_end(self):
@@ -178,7 +215,6 @@ class MagritteFinetuneDialectDetection(MagritteBase):
                          {"delimiter":t_del,"quotechar":t_quo, "escapechar":t_esc})
         tensorboard.add_text("train_f1_table", table, self.current_epoch)
 
-
     def validation_step(self, batch, batch_idx):
         x, target = batch
         target_tags = target["target_tags"]
@@ -207,7 +243,6 @@ class MagritteFinetuneDialectDetection(MagritteBase):
             self.accumulators["val_target_" + k].update(target["target_" + k])
             f1 = self.val_f1["f1_" + k](output["predicted_" + k], target["target_" + k])
             self.log("val_f1_"+k, f1, on_step=True, on_epoch=True, prog_bar=True, logger=True)
-
 
         return loss
 
@@ -260,3 +295,30 @@ class MagritteFinetuneDialectDetection(MagritteBase):
         for m in self.modules():
             if isinstance(m, (nn.Conv2d, nn.ConvTranspose2d, nn.BatchNorm2d)):
                 nn.init.normal_(m.weight.data, 0.0, 0.02)
+
+    def predict(self, filepath: str) -> Dict[str, torch.Tensor]:
+        """
+        Predicts del, quotechars, and escape of a file using the model, first tokenizing it and then passing it through the model
+        :param file: the file to embed
+        :return: the predictions of the file
+        """
+        with torch.no_grad():
+            tokens = self.tokenizer.tokenize_file(filepath).type(torch.long).to(self.device)
+            input_tokens = tokens.unsqueeze(0).to(self.device)
+            output = self.forward(input_tokens)
+
+        delimiter  = self.token_vocab.lookup_tokens(
+                output["predicted_delimiter"].cpu().numpy()
+            )[0]
+        quotechar = self.token_vocab.lookup_tokens(
+                output["predicted_quotechar"].cpu().numpy()
+            )[0]
+        escapechar = self.token_vocab.lookup_tokens(
+                output["predicted_escapechar"].cpu().numpy()
+            )[0]
+        
+        return {
+            "delimiter": delimiter if delimiter != "[UNK]" else None,
+            "quotechar": quotechar if quotechar != "[UNK]" else None,
+            "escapechar": escapechar if escapechar != "[UNK]" else None,
+        }

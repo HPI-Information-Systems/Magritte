@@ -1,0 +1,21 @@
+{
+  "model": {
+  "vocab_path": "vocabulary/gittables/tokens.txt",
+  "label_path": "vocabulary/gittables/lineclass_labels.txt",
+  "d_model":768,
+  "max_len": 128,
+  "max_rows": 128,
+  "n_layers":6,
+  "n_heads":6,
+  "n_classes":6,
+  "nocnn":true,
+  "ignore_class":"empty",
+  "d_k":768, 
+  "d_v":64, 
+  "d_ff":3072,
+  "n_segments":2,
+  "encoding_dim":128,
+  "classes_weights": [0.01,1, 1, 1, 1, 1],
+  "save_path" : "weights/magritte_rowclass.pth"
+}
+}

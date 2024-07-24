@@ -3,6 +3,30 @@ This repository contains the artifacts and source code for MaGRiTTE: a project t
 
 To reproduce the results of the paper, please follow the instructions in the following sections.
 
+## Set up the environment
+To setup the environment, we recommend using a virtual environment to avoid conflicts with other packages.
+If using conda, run:
+
+```conda env create -f environment.yml``` 
+
+to create the environment, and then 
+
+```conda activate magritte``` 
+
+to activate it.
+If using pip, run:
+
+ `pip3 install -r requirements.txt`
+
+## Use Case: Pollution Data
+The input data to reproduce the use case presented in the paper is available in the `data/massbay` folder.
+Two scripts can be used to integrate these files. 
+ - A hand-crafted script can be launched with  ``python3 use_case_manual.py``. The script will generate the result file `results/massbay/manual_integrated.csv`.
+ - The script that uses MaGRiTTE can be launched with ``python3 use_case_magritte.py``. The script will generate the result file `results/massbay/magritte_integrated.csv`.
+
+Running the MaGRiTTE version of the script requires downloading the corresponding weights for the model. 
+The weights can be downloaded at [url]() See also section below.
+
 ## Datasets
 The folder `data` contains the datasets used for the experiments. The datasets are organized in subfolders, each containing the data for a specific task. 
 Due to the space policy of GitHub, we publish some of our datasets in compressed folders in ``tar.gz`` formats, or on external servers.
@@ -22,22 +46,6 @@ Due to the space policy of GitHub, we publish the weights on external servers.
 To simplify download and extraction, we provide a script to automatically downloads and extracts the data (``download_weights.sh``)
 Run the ``download_weights.sh`` script in the root repository folder to download and extract the weights (requires a *nix system with ``megatools`` installed).
 Alternatively, the weights can be manually downloaded from the links provided in the `links.txt` file.
-
-
-## Setup environment
-To setup the environment, we recommend using a virtual environment to avoid conflicts with other packages.
-If using conda, run:
-
-```conda env create -f environment.yml``` 
-
-to create the environment, and then 
-
-```conda activate magritte``` 
-
-to activate it.
-If using pip, run:
-
- `pip3 install -r requirements.txt`
 
 The `data` folder contains the data used for the experiments, arranged in several subfolders. 
 

@@ -1,4 +1,4 @@
-# from .magritte_base import *
+from .magritte_base import *
 # from .magritte_pretrain_rowpair import *
 # from .magritte_pretrain_gan import *
 #
@@ -23,3 +23,5 @@
 from .magritte_finetune_dialect.dataset import *
 from .magritte_finetune_dialect.data_module import *
 from .magritte_finetune_dialect.model import *
+
+from .reca_columntype.table_dataset import *

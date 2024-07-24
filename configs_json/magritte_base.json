@@ -1,0 +1,33 @@
+{
+  "tokenizer": {
+    "max_rows": 128,
+    "max_len": 128,
+    "unk_token": "[UNK]",
+    "sep_token": "[SEP]",
+    "pad_token": "[PAD]",
+    "cls_token": "[CLS]",
+    "mask_token": "[MASK]"
+  },
+  "vocabulary": {
+    "path": "vocabulary/gittables/tokens.txt"
+  },
+  "model": {
+    "d_model": 768,
+    "max_len": 128,
+    "max_rows": 128,
+    "encoding_dim": 128,
+    "n_layers": 6,
+    "n_heads": 6,
+    "n_segments": 2,
+    "d_k": 768,
+    "d_v": 64,
+    "d_ff": 3072,
+    "beta": 1.5,
+    "no_grad": ["embedding.*", "norm.*", "encoding_layers.*"],
+    "load_path": "weights/magritte_rowpair_1.pth",
+    "save_path": "weights/magritte_ae_maxpool_128.pth",
+    "dropout": 0.1,
+    "optimizer_lr": 1e-3,
+    "reduce_features": true
+  }
+}
