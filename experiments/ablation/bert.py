@@ -163,18 +163,3 @@ class Table_embedder(EmbeddingsModel):
             pass
         else:
             raise NotImplementedError
-
-if __name__ == '__main__':
-    # sentence = ['']
-    # erb = Bert_Embedding_Generator('roberta')
-    # e = erb(sentence=sentence)
-    # tt = Table_embedder(embedding_model='roberta', output_format='mean')
-    # emb = tt.embed('/home/francesco.pugnaloni/test_docker/test_table.csv')
-    # emb = tt.embed('/data/survey/csv/Transfer7-tecRep1-d-5,P4&5 (BioRep3).csv')
-    # emb = tt.embed('/data/survey/csv/dhsc-spend-over-25000-may-2018.csv')
-    # emb = tt.embed('/data/survey/csv/dhsc-spend-over-25000-may-2018.csv')
-    # print('gg')
-    path = "data/survey/"
-    train_dataset = pd.read_csv(path + "train.csv")
-    tt = Table_embedder(embedding_model='turl')
-    tt.get_embeddings(filenames=train_dataset["filename"], dataset_name='train', model_name='turl')    

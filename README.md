@@ -25,7 +25,7 @@ Two scripts can be used to integrate these files.
  - The script that uses MaGRiTTE can be launched with ``python3 use_case_magritte.py``. The script will generate the result file `results/massbay/magritte_integrated.csv`.
 
 Running the MaGRiTTE version of the script requires downloading the corresponding weights for the model. 
-The weights can be downloaded at [url]() See also section below.
+The weights can be downloaded at [url](https://mega.nz/file/wJMhDbIa#Zmr23xd67xktcZtpvuu781Om2uwb1PWtQina6a_zwKg) See also section below.
 
 ## Datasets
 The folder `data` contains the datasets used for the experiments. The datasets are organized in subfolders, each containing the data for a specific task. 
@@ -43,6 +43,7 @@ The datasets are organized as follows:
 ## Model Weights
 The folder `weights` contains the weights for the model used for the experiments. 
 Due to the space policy of GitHub, we publish the weights on external servers.
+The main weights can be found at [https://mega.nz/file/wJMhDbIa#Zmr23xd67xktcZtpvuu781Om2uwb1PWtQina6a_zwKg](https://mega.nz/file/wJMhDbIa#Zmr23xd67xktcZtpvuu781Om2uwb1PWtQina6a_zwKg).
 To simplify download and extraction, we provide a script to automatically downloads and extracts the data (``download_weights.sh``)
 Run the ``download_weights.sh`` script in the root repository folder to download and extract the weights (requires a *nix system with ``megatools`` installed).
 Alternatively, the weights can be manually downloaded from the links provided in the `links.txt` file.
