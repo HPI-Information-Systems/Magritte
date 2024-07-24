@@ -20,4 +20,5 @@ dependencies:
     - torchtext
     - torchvision
     - lightning
+    - transformers=4.30
 
