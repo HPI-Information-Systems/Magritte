@@ -15,9 +15,10 @@ dependencies:
   - matplotlib
   - scikit-learn
   - seaborn
-  pip:
-    - torch
-    - torchtext
-    - torchvision
-    - lightning
+  - regex
+  -  pip:
+      - torch
+      - torchtext
+      - torchvision
+      - lightning
 

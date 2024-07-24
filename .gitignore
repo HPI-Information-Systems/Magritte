@@ -2,6 +2,7 @@ data/estimate/csv
 data/estimate/json
 weights/*.pth
 weights/rowclass/*.pth
+data/gittables/*.tar.gz
 
 # JupyterNotebooks template
 .ipynb_checkpoints

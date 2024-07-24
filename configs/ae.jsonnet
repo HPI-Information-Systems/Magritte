@@ -11,7 +11,7 @@ local batch_size = 64;
 {
   data_module: {
   data_path: "data/gittables/csv",
-  save_dir:"experiments/pretrain_ae/",
+  save_dir:"results/pretrain_ae/",
   n_files : n_files,
   max_rows : max_rows,
   max_len :max_len,
@@ -49,7 +49,7 @@ local batch_size = 64;
     accumulate_grad_batches:4,
     },
     logger:{
-     save_dir:"experiments/pretrain_ae/tensorboard/",
+     save_dir:"results/pretrain_ae/tensorboard/",
     },
     callbacks: {
     pretrain_loader:{pretrained_path:"out/magritte_rowpair_1.pth",},
