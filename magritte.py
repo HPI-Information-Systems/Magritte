@@ -3,7 +3,7 @@ import logging
 logging.captureWarnings(True)
 
 from transformers import logging as transformers_logging
-transformers_logging.set_verbosity_warning()
+transformers_logging.set_verbosity_error()
 
 warnings.filterwarnings("ignore", "torchtext", UserWarning)
 warnings.filterwarnings("ignore", "Some weights of the model")
@@ -35,10 +35,14 @@ class MaGRiTTE():
     @classmethod
     def extract_table(cls, filepath):
         prediction = cls.dialect_model.predict(filepath)
+        if prediction["escapechar"] == '"':
+            escape = {"escapechar": None, "doublequote": True}
+        else:
+            escape = {"escapechar": prediction["escapechar"], "doublequote": False}
         table = pd.read_csv(filepath,
                             delimiter=prediction["delimiter"], 
                             quotechar=prediction["quotechar"], 
-                            escapechar=prediction["escapechar"],
+                            **escape,
                             header=None,
                             engine="python",
                             on_bad_lines="skip")
